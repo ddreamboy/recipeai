@@ -8,10 +8,10 @@ auth_dir.mkdir(parents=True, exist_ok=True)
 
 def save_magnit_session():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.firefox.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
-        page.goto("https://magnit.ru/search?term=энергетики", timeout=300_000)
+        page.goto("https://magnit.ru", timeout=0)
 
         input("Press Enter to close the browser and save the session...")
 

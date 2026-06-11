@@ -11,9 +11,19 @@ class Settings(BaseSettings):
     )
 
 
+class LLMSettings(BaseSettings):
+    LLM_API_KEY: str
+    LLM_API_BASE_URL: str
+    LLM_API_BASE_MODEL: str
+
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
+
+
 @lru_cache()
-def get_settings() -> Settings:
-    return Settings()
+def get_settings() -> tuple[Settings, LLMSettings]:
+    return Settings(), LLMSettings()
 
 
-settings = get_settings()
+settings, llm_settings = get_settings()

@@ -15,7 +15,7 @@ class ICache:
 
 
 class DiskCache(ICache):
-    def __init__(self, cache_dir: str = "~/.recipeai/cache"):
+    def __init__(self, cache_dir: str = "~/.cache/recipeai"):
         Path(cache_dir).expanduser().mkdir(parents=True, exist_ok=True)
         self.cache = diskcache.Cache(cache_dir)
 

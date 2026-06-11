@@ -1,13 +1,22 @@
 import asyncio
 
-from app.tools.magnit import search_products
+from langchain_core.messages import HumanMessage
+
+from app.agent.recipe import Cart, graph
 
 
 async def main():
-    query = input("Введите название продукта для поиска:\n") or "творог"
-    products = await search_products(query)
-    for product in products:
-        print(product)
+    result = await graph.ainvoke(
+        {
+            "messages": [
+                HumanMessage(
+                    content="Рецепт: греческий йогурт, низкокалорийные печеньки, сахарозаменитель, ягоды, какао"
+                )
+            ],
+        }
+    )
+
+    cart = Cart.model_validate(result["cart"])
 
 
 if __name__ == "__main__":

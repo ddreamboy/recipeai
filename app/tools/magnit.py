@@ -1,14 +1,18 @@
 import asyncio
 import random
+import re
 from pathlib import Path
 
 from bs4 import BeautifulSoup
+from langchain.tools import tool
 from loguru import logger
 from lxml import html
+from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright.async_api import async_playwright
 from pydantic import BaseModel
 
 from app.core.cache import diskcache_cache
+from app.core.rate_limiter import rate_limiter
 
 BASE_URL = "https://magnit.ru"
 AUTH_DIR = Path("playwright", ".auth")
@@ -17,6 +21,9 @@ AUTH_FILE = AUTH_DIR / "magnit.json"
 CACHE_SALT = "magnit_search"
 
 EXTRACT_RATIO = 0.35
+PRODUCT_PAGE_RETRIES = 2
+
+_search_semaphore = asyncio.Semaphore(2)
 
 CARDS_LAYOUT_FULL_XPATH = "/html/body/div[1]/div[1]/div/main/div/div/div/div[1]"
 CARDS_RELATIVE_XPATH = ".//article"
@@ -33,15 +40,17 @@ CARBS_FULL_XPATH = "/html/body/div[2]/div[1]/div/div/main/div/div/div[1]/div/div
 
 class Product(BaseModel):
     title: str
-    price: str
+    price: float | None = None
     image_url: str
     product_url: str
-    kkal: str = None
-    protein: str = None
-    fats: str = None
-    carbs: str = None
+    kkal: float | None = None
+    protein: float | None = None
+    fats: float | None = None
+    carbs: float | None = None
 
 
+@tool
+@rate_limiter
 async def search_products(query: str) -> list[Product]:
     """
     Returns a list of products from Magnit website based on the provided search query.
@@ -63,8 +72,8 @@ async def search_products(query: str) -> list[Product]:
         return []
 
     products = []
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+    async with _search_semaphore, async_playwright() as p:
+        browser = await p.chromium.launch(headless=False)
         context = await browser.new_context(storage_state=AUTH_FILE)
         page = await context.new_page()
         search_url = f"{BASE_URL}/search?term={query}"
@@ -98,9 +107,14 @@ async def search_products(query: str) -> list[Product]:
             image_src = image_el[0].get("src") if image_el else "no image"
             href = href_el[0] if href_el else "no href"
 
+            price_pattern = r"\d+\.\d{2}"
+            price = re.search(price_pattern, price_text.replace(" ", ""))
+
             product = Product(
                 title=title,
-                price=price_text,
+                price=float(price)
+                if price_text != "no price" and price_text != "no price"
+                else None,
                 image_url=image_src,
                 product_url=f"{BASE_URL}{href}",
             )
@@ -109,9 +123,27 @@ async def search_products(query: str) -> list[Product]:
             )
 
             await asyncio.sleep(random.uniform(0.5, 2))
-            await page.goto(
-                product.product_url, wait_until="domcontentloaded", timeout=60000
-            )
+
+            opened = False
+            for attempt in range(1, PRODUCT_PAGE_RETRIES + 1):
+                try:
+                    await page.goto(
+                        product.product_url,
+                        wait_until="domcontentloaded",
+                        timeout=60000,
+                    )
+                    opened = True
+                    break
+                except PlaywrightTimeoutError:
+                    logger.warning(
+                        f"Timeout opening {product.product_url}, "
+                        f"attempt {attempt}/{PRODUCT_PAGE_RETRIES}"
+                    )
+
+            if not opened:
+                logger.warning(f"Skipping product {product.product_url}")
+                continue
+
             await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             content = await page.content()
             soup = BeautifulSoup(content, "html.parser")
