@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Йогурт Савушкин продукт Греческий 2% 140г",
+        "price": "54 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/WjOyBe9CGyl9hEESdchvuB7qtJ8JLebn5flraleNnOE/rs:fit:416:416/plain/s3://img-dostavka/catalog/uf/dac/dac3ff5a397fe9e41764eeb384e30469/59fc4c7b23f4e172510d67a7759852b7.jpeg@webp",
+        "product_url": "https://magnit.ru/product/1000175792-yogurt_savushkin_grecheskiy_2_140g?shopCode=784507&shopType=express",
+        "kkal": "66.8",
+        "protein": "8",
+        "fats": "2",
+        "carbs": "4.2"
+    },
+    {
+        "title": "Йогурт Простоквашино густой Греческий 2% 235г",
+        "price": "89.99 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/aHDvkzKz-GeJY42wSU_COod6HLbXGOzUfPVfZVoOfnM/rs:fit:416:416/plain/s3://img-dostavka/catalog/pim/goods/1000551514/image/b4cea5a6e5c32027503a6815fa856ca9.jpeg@webp",
+        "product_url": "https://magnit.ru/product/1000551514-prostokvashino_yogurt_gustoy_grecheskiy_2_235g?shopCode=784507&shopType=express",
+        "kkal": "63",
+        "protein": "8.7",
+        "fats": "2",
+        "carbs": "2.5"
+    },
+    {
+        "title": "Йогурт греческий с черникой Простоквашино 1.8% 230г",
+        "price": "89.99 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/WhqM6LrL3ZZ6aww40ajZEId1Cs36R34Ol7JP85aUGrc/rs:fit:416:416/plain/s3://img-dostavka/catalog/uf/911/9110d01d1bfe70256de3a72e943bd5ae/cc28f3e5dea7efbd8f4912e6a4baf104.jpeg@webp",
+        "product_url": "https://magnit.ru/product/8000087796-prostokvashino_yogurt_gustoy_grecheskiy_s_chernikoy_1_8_230g?shopCode=784507&shopType=express",
+        "kkal": "87",
+        "protein": "7.7",
+        "fats": "1.8",
+        "carbs": "9.9"
+    },
+    {
+        "title": "Йогурт Простоквашино густой Греческий 2% 135г",
+        "price": "56.99 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/aJj4T2fLcCw4ntZ3XNBvDbu3UUxJsq59qq01ct7luK4/rs:fit:416:416/plain/s3://img-dostavka/catalog/pim/goods/1000551513/image/e74377f29572195458f066fbfb254064.jpeg@webp",
+        "product_url": "https://magnit.ru/product/1000551513-prostokvashino_yogurt_gustoy_grecheskiy_2_135g?shopCode=784507&shopType=express",
+        "kkal": "63",
+        "protein": "8.7",
+        "fats": "2",
+        "carbs": "2.5"
+    },
+    {
+        "title": "Йогурт греческий безлактозный со вкусом малины и мяты Виола 3% 140г",
+        "price": "79.99 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/8ziLbhX5sTWBVjfS287kHXh7_NcD66qg-hHpK6WVNAE/rs:fit:416:416/plain/s3://img-dostavka/catalog/uf/458/458ce02c1e49c524eb7e9c6747bde3ad/562aab791c5ed8638a57b02ff5e43fb2.jpeg@webp",
+        "product_url": "https://magnit.ru/product/8000076588-viola_free_yogurt_grecheskiy_bezlaktoznyy_malina_myata_3_140g?shopCode=784507&shopType=express",
+        "kkal": "116",
+        "protein": "6.3",
+        "fats": "3",
+        "carbs": "15.9"
+    },
+    {
+        "title": "Йогурт Free греческий безлактозный Viola 4% 180г",
+        "price": "79.99 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/w4fQjo6Tu6WaM1J9Xc_WiWmq50NhByMayVoNOSn3Uqo/rs:fit:416:416/plain/s3://img-dostavka/catalog/uf/755/755693e5bf4ecff98cd9bc7029c09073/864d395f95a692b39e7c03a009a81fb7.jpeg@webp",
+        "product_url": "https://magnit.ru/product/8000076561-viola_free_yogurt_grecheskiy_bezlaktoznyy_4_180g_pl_st?shopCode=784507&shopType=express",
+        "kkal": "92",
+        "protein": "8.4",
+        "fats": "4",
+        "carbs": "5.5"
+    },
+    {
+        "title": "Салат Греческий М Кухня 190г",
+        "price": "189.99 ₽",
+        "image_url": "https://images-foodtech.magnit.ru/Rskys7BaKwjtKoa0g4HkqltwumH7jHPo0HHJPtxa8yc/rs:fit:416:416/plain/s3://img-dostavka/catalog/uf/5fb/5fb1a22f2bf1c82b3d99caa15d266c6d/36896aea86d18298a307ca725888c408.jpeg@webp",
+        "product_url": "https://magnit.ru/product/1000528382-m_kukhnya_salat_grecheskiy_izdelie_kulinarnoe_salat_iz_ovoshchey_190g_prodmaster_6?shopCode=784507&shopType=express",
+        "kkal": "110",
+        "protein": "2.5",
+        "fats": "9",
+        "carbs": "4.5"
+    }
+]
