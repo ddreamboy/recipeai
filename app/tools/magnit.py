@@ -104,6 +104,7 @@ async def search_products(query: str) -> list[Product]:
     Returns:
         list[Product]: A list of Product objects containing the search results.
     """
+    logger.info(f"Searching for products with query: {query}")
     cache_tag = f"{CACHE_SALT}_{query}"
     cached = diskcache_cache.get(cache_tag)
     if cached:
