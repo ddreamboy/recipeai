@@ -86,7 +86,7 @@ Respond in the same language as the user's request (Russian by default).
 
 ## Output format
 1. Short dish summary (only if you composed the menu yourself).
-2. Cart table: ingredient -> chosen product -> package size -> price.
+2. Cart list: ingredient -> chosen product -> package size -> price.
 3. "Не найдено / замены" section, if any.
 
 Do not invent products that were not in the search results.
@@ -114,8 +114,8 @@ async def format_output_node(state: AgentState):
             *state["messages"],
             HumanMessage(
                 content=(
-                    "Выбери по одному товару под каждый ингредиент рецепта. "
-                    "Верни их номера [N] из результатов поиска в selected_indices."
+                    "Select the products you want to add to the cart based on the search results. "
+                    "Return their indices [N] from the search results in selected_indices."
                 )
             ),
         ]
@@ -129,7 +129,7 @@ async def format_output_node(state: AgentState):
     return {
         "cart": Cart(
             products=selected,
-            total_price=sum(p.price or 0 for p in selected),
+            total_price=round(sum(p.price or 0 for p in selected), 2),
             total_kkal=sum(_to_float(p.kkal) for p in selected),
             total_protein=sum(_to_float(p.protein) for p in selected),
             total_fats=sum(_to_float(p.fats) for p in selected),
