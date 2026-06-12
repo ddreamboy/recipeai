@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeAI - Корзина</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .products { display: flex; flex-direction: column; gap: 20px; }
+        .product-card { display: flex; border: 1px solid #e0e0e0; padding: 15px; border-radius: 10px; gap: 20px; align-items: start; }
+        .product-card img { width: 120px; height: auto; border-radius: 6px; object-fit: contain; }
+        .product-info { display: flex; flex-direction: column; gap: 8px; }
+        .product-info h3 { margin: 0; }
+        .product-info a { text-decoration: none; color: #d32f2f; }
+        .product-info a:hover { text-decoration: underline; }
+        .price { font-size: 1.2em; font-weight: bold; color: #2e7d32; }
+        .nutrition { font-size: 0.9em; color: #555; }
+        
+        .totals { margin-top: 40px; padding: 20px; background: #f5f5f5; border-radius: 10px; }
+        .totals h2 { margin-top: 0; }
+        .totals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    </style>
+</head>
+<body>
+    {% if agent_response %}
+        <div class="agent-response">
+            <p>{{ agent_response }}</p>
+        </div>
+    {% endif %}
+    <h1>Собранные ингредиенты</h1>
+
+    <div class="products">
+        {% for product in cart.products %}
+        <div class="product-card">
+            <a href="{{ product.product_url }}" target="_blank">
+                <img src="{{ product.image_url }}" alt="{{ product.title }}">
+            </a>
+            
+            <div class="product-info">
+                <h3><a href="{{ product.product_url }}" target="_blank">{{ product.title }}</a></h3>
+                
+                <div class="price">
+                    {% if product.price is not none %}{{ product.price }} ₽{% else %}Цена не указана{% endif %}
+                </div>
+                
+                <div class="nutrition">
+                    <strong>В 100 г:</strong> 
+                    {% if product.kkal is not none %}{{ product.kkal }} ккал{% else %}? ккал{% endif %} •
+                    Б: {% if product.protein is not none %}{{ product.protein }}{% else %}?{% endif %} г •
+                    Ж: {% if product.fats is not none %}{{ product.fats }}{% else %}?{% endif %} г •
+                    У: {% if product.carbs is not none %}{{ product.carbs }}{% else %}?{% endif %} г
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p>Корзина пока пуста.</p>
+        {% endfor %}
+    </div>
+
+    {% if cart and cart.products %}
+    <div class="totals">
+        <h2>Итого по рецепту</h2>
+        <div class="totals-grid">
+            <div>
+                <strong>Общая стоимость:</strong> {{ cart.total_price }} ₽
+            </div>
+            <div>
+                <strong>Общая калорийность:</strong> {{ cart.total_kkal }} ккал
+            </div>
+            <div>
+                <strong>Суммарные белки:</strong> {{ cart.total_protein }} г
+            </div>
+            <div>
+                <strong>Суммарные жиры:</strong> {{ cart.total_fats }} г
+            </div>
+            <div>
+                <strong>Суммарные углеводы:</strong> {{ cart.total_carbs }} г
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>
